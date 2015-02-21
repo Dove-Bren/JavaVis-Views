@@ -146,4 +146,21 @@ public class Tree {
 	}
 	
 	
+	@Override
+	public String toString() {
+		String out =  "Name: " + name + 
+					  "\nDepth: " + depth + "  hDepth: " + hDepth + "\n";
+		if (parent != null) {
+			out += "Parent name: " + parent.getName() + "\n";
+		}
+		if (!children.isEmpty()) {
+			out += "Children:\n";
+			for (Tree t : children) {
+				out += "  " + t.getName() + "\n";
+			}
+		}
+		
+		return out;
+	}
+	
 }
