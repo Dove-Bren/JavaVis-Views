@@ -80,8 +80,14 @@ public class Cclass {
 	@Override
 	public String toString() {
 		String out =  "[" + this.packageName + "." + this.name +"]:\n";
+		if (declaration != null && declaration.getExtends() != null) {
+			out += "Extends: " + declaration.getExtends() + "\n";
+		}
+		if (declaration != null && declaration.getImplements() != null && !declaration.getImplements().isEmpty()) {
+			out += "Implements: " + declaration.getImplements() + "\n";
+		}
 		for (Method m : methods) {
-			out += m.toString() + "\n";
+			out += "  " + m.toString() + "\n";
 		}
 		
 		
