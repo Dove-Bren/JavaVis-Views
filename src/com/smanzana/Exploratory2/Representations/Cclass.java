@@ -35,6 +35,10 @@ public class Cclass {
 				
 	}
 	
+	public Cclass(ClassDeclaration decl, String packageName, List<Method> methods) {
+		this(decl.getClassName(), decl, packageName, methods);
+	}
+	
 	public Cclass(String name, String packageName, List<Method> methods) {
 		this(name, null, packageName, methods);
 	}
