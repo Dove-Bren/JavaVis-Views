@@ -3,11 +3,15 @@ package com.smanzana.Exploratory2;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import com.smanzana.Exploratory2.FileParsing.FileParser;
+import com.smanzana.Exploratory2.Graph.Graph;
 import com.smanzana.Exploratory2.Representations.Cclass;
+import com.smanzana.Exploratory2.Tree.Tree;
 
 /**
  * This class is the driver for the visualization. 
@@ -46,6 +50,8 @@ public final class Driver {
 			System.out.println(c);
 		}
 		
+		
+		
 	}
 	
 	
@@ -79,6 +85,44 @@ public final class Driver {
 
 			
 		}
+	}
+	
+	private static Graph classesAsGraph(Set<Cclass> classes) {
+		return null;
+	}
+	
+	private static Tree classesAsTree(Set<Cclass> classes) {
+		
+		//naive approach - not optimized
+		Map<Cclass, Tree> treeMap = new HashMap<Cclass, Tree>();
+		
+		for (Cclass c : classes) {
+			//go through and create a tree for each class
+			treeMap.put(c, new Tree());
+		}
+		
+		
+		
+		
+		return null;
+	}
+	
+	/**
+	 * helper to a helper method, this method looks in the passed set and returns the Cclass object
+	 * that matches the passed object (string in the case of a Cclass)<br />
+	 * For more info, see {@link com.smanzana.Exploratory2.Representations.Cclass Cclass}.
+	 * {@link com.smanzana.Exploratory2.Representations.Cclass#equals(Object) equals(Object)} 
+	 * @param classes
+	 * @return
+	 */
+	private static Cclass getClass(Set<Cclass> classes, Object o) {
+		for (Cclass c : classes) {
+			if (c.equals(o)) {
+				return c;
+			}
+		}
+		
+		return null;
 	}
 
 
