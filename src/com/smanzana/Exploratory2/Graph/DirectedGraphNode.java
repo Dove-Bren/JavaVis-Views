@@ -1,8 +1,11 @@
 package com.smanzana.Exploratory2.Graph;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import com.smanzana.Exploratory2.Representations.Cclass;
 
-public class GraphNode {
+public class DirectedGraphNode {
 	
 	private String name;
 	
@@ -13,9 +16,12 @@ public class GraphNode {
 	 */
 	private String uniqueKey; 
 	
+	private Set<DirectedWeightedEdge> edges;
 	
-	public GraphNode(Cclass cl) {
+	
+	public DirectedGraphNode(Cclass cl) {
 		this.name = cl.getName();
+		this.edges = new HashSet<DirectedWeightedEdge>();
 		this.uniqueKey = (cl.getPackageName().substring(cl.getPackageName().lastIndexOf(".") + 1)) + "." + this.name;
 	}
 
@@ -35,6 +41,28 @@ public class GraphNode {
 		return uniqueKey;
 	}
 	
+	public Set<DirectedWeightedEdge> getEdges() {
+		return edges;
+	}
 	
+	@Override
+	public String toString() {
+		String out = uniqueKey + "\n";
+		
+		if (edges != null && !edges.isEmpty()) {
+			out += "Edges: \n";
+			for (DirectedWeightedEdge edge : edges) {
+				out += "  " + edge + "\n";
+			}
+		}
+		
+		
+		
+		return out;
+	}
 	
+	@Override
+	public boolean equals(Object o) {
+		return (o.toString().equals(this.toString()));
+	}
 }
