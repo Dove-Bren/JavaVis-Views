@@ -6,8 +6,10 @@ import java.awt.geom.Rectangle2D;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 import javax.swing.JFrame;
@@ -35,11 +37,13 @@ public final class Driver {
 
 	public static FileParser fileP;
 	
-	public static Graph eGraph, iGraph;
+	public static Set<Cclass> classes;
 	
-	public static JGraphModelAdapter<String, DefaultEdge> eAdapter, iAdapter;
+	//public static Graph eGraph, iGraph;
 	
-	public static JFrame eFrame, iFrame;
+	//public static JGraphModelAdapter<String, DefaultEdge> eAdapter, iAdapter;
+	
+	//public static JFrame eFrame, iFrame;
 
 	
 //	@Override
@@ -71,21 +75,28 @@ public final class Driver {
 			return;
 		}
 		
-		Scanner input = null;
-		try {
-			input = new Scanner(file);
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		Scanner input = null;
+//		try {
+//			input = new Scanner(file);
+//		} catch (FileNotFoundException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		
 
 		fileP = new FileParser();
+		classes = new HashSet<Cclass>();
 
 // 		eGraph = new ParentGraph();
 // 		iGraph = new ParentGraph();
 		
 		processFile(file);
+		
+		System.out.println("Got a total of: " + classes.size() + " classes!");
+		
+		for (Cclass c : classes) {
+			System.out.println(c);
+		}
 		
 //		eFrame = new JFrame("Extend Graph");
 //        eFrame.setSize(640, 480);
@@ -158,14 +169,21 @@ public final class Driver {
 
 //			
 			Cclass cl = fileP.getcClass();
+			classes.add(cl);
+//			
+//			for (Method m : cl.getMethods()) {
+//				System.out.println("" + m.getName() + " :");
+//				for (String s : m.getCodeLines()) {
+//					System.out.print(s);
+//				}
+//				System.out.println("");
+//			}
 			
-			for (Method m : cl.getMethods()) {
-				System.out.println("" + m.getName() + " :");
-				for (String s : m.getCodeLines()) {
-					System.out.print(s);
-				}
-				System.out.println("");
-			}
+			
+			
+			
+			
+			
 //			System.out.println("Class found: " + decl.getClassName());
 //			if (decl.getExtends() != null)
 //			System.out.println("  Class extends: " + decl.getExtends());

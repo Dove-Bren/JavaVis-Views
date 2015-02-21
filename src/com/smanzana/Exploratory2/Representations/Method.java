@@ -32,5 +32,10 @@ public class Method {
 		return codeLines;
 	}
 	
+	@Override
+	public String toString() {
+		return this.name;
+	}
+	
 	
 }

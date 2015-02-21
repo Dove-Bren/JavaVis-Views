@@ -77,4 +77,16 @@ public class Cclass {
 		methods.add(meth);
 	}
 	
+	@Override
+	public String toString() {
+		String out =  "[" + this.packageName + "." + this.name +"]:\n";
+		for (Method m : methods) {
+			out += m.toString() + "\n";
+		}
+		
+		
+		return out;
+				
+	}
+	
 }
