@@ -10,6 +10,7 @@ import java.util.Set;
 
 import com.smanzana.Exploratory2.FileParsing.ClassDeclaration;
 import com.smanzana.Exploratory2.FileParsing.FileParser;
+import com.smanzana.Exploratory2.FileParsing.JSON;
 import com.smanzana.Exploratory2.Graph.Graph;
 import com.smanzana.Exploratory2.Representations.Cclass;
 import com.smanzana.Exploratory2.Representations.Import;
@@ -56,6 +57,9 @@ public final class Driver {
 		
 		System.out.println(extendTree);
 		
+		File outputJson = new File("JSONOut.json");
+		
+		JSON.toJSON(outputJson, extendTree);
 		
 		
 	}

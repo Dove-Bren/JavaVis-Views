@@ -2,7 +2,9 @@ package com.smanzana.Exploratory2.FileParsing;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Iterator;
 
 import com.smanzana.Exploratory2.Tree.Tree;
 
@@ -15,6 +17,13 @@ public final class JSON {
 		
 		if (outfile.exists()) {
 			System.out.println("Overwriting " + outfile.getAbsolutePath());
+		} else {
+			try {
+				outfile.createNewFile();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
 		PrintWriter writer = null;
@@ -43,11 +52,18 @@ public final class JSON {
 		writer.print("\"name\": \"" + tree.getName() + "\", ");
 		writer.print("\"data\": {}, ");
 		writer.print("\"children\": [");
-		
-		//go through all children and print them too
-		if (tree.getChildren() != null && !tree.getChildren().isEmpty()) {
-			for (Tree child : tree.getChildren()) {
-				printTree(writer, child);
+//		
+//		//go through all children and print them too
+//		if (tree.getChildren() != null && !tree.getChildren().isEmpty()) {
+//			for (Tree child : tree.getChildren()) {
+//				printTree(writer, child);
+//			}
+//		}
+		Iterator<Tree> childrenIt = tree.getChildren().iterator();
+		while (childrenIt.hasNext()) {
+			printTree(writer, childrenIt.next());
+			if (childrenIt.hasNext()) {
+				writer.print(" , ");
 			}
 		}
 		
