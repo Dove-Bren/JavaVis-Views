@@ -142,6 +142,7 @@ public class FileParser {
 		String line = "";
 		//assume first line is package declaration
 		packageName = input.nextLine().substring(8); //'package ' is 8 chars
+		packageName = packageName.substring(0, packageName.length() - 1);
 		
 		while (input.hasNext()) {
 			line = input.nextLine().trim();

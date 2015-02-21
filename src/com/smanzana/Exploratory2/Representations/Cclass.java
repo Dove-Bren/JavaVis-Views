@@ -25,7 +25,7 @@ public class Cclass {
 		
 		this.declaration = decl;
 		this.name = name;
-		this.packageName = name;
+		this.packageName = packageName;
 		
 		this.methods = methods;
 		
