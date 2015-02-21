@@ -8,9 +8,11 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import com.smanzana.Exploratory2.FileParsing.ClassDeclaration;
 import com.smanzana.Exploratory2.FileParsing.FileParser;
 import com.smanzana.Exploratory2.Graph.Graph;
 import com.smanzana.Exploratory2.Representations.Cclass;
+import com.smanzana.Exploratory2.Representations.Import;
 import com.smanzana.Exploratory2.Tree.Tree;
 
 /**
@@ -47,7 +49,7 @@ public final class Driver {
 		System.out.println("Got a total of: " + classes.size() + " classes!");
 		
 		for (Cclass c : classes) {
-			System.out.println(c);
+			System.out.println(c.info());
 		}
 		
 		
@@ -91,20 +93,98 @@ public final class Driver {
 		return null;
 	}
 	
-	private static Tree classesAsTree(Set<Cclass> classes) {
+	private static Tree classesAsExtendsTree(Set<Cclass> classes) {
+		
+		if (classes == null || classes.isEmpty()) {
+			return null;
+		}
 		
 		//naive approach - not optimized
 		Map<Cclass, Tree> treeMap = new HashMap<Cclass, Tree>();
 		
 		for (Cclass c : classes) {
 			//go through and create a tree for each class
-			treeMap.put(c, new Tree());
+			treeMap.put(c, new Tree(c.toString()));
+		}
+		
+
+		ClassDeclaration decl;		
+		//have to do this after all trees have been created
+		for (Cclass c : classes) {
+			decl = c.getDeclaration();
+			if (decl == null) {
+				continue;
+			}
+			if (decl.getExtends() != null ) {
+				//has a parent
+				Import im = c.getImport(decl.getExtends());
+				Cclass parent;
+				if (im != null) {
+					//we found an import that matched! e.g. we have it's package name!
+					parent = getClass(classes, im.getPackageName() + "." + decl.getExtends());
+					
+					//if parent == null for any of these, it means we haven't created a tree for the class
+					//yet. This probably means we don't have the source code for that class, and need
+					//to make up an imaginary class
+					if (parent == null) {
+						parent = new Cclass(decl.getExtends(), im.getPackageName());
+					}
+				} else {
+					//no matching import, meaning it has the same package
+					//OR it means there was a generic import: java.util.*
+					//which we can't recover from :(
+					
+					//our last shot is that the whole package was specific inline. We test for this
+					//by seeing if there exists a . in the extend line :(
+					if (decl.getExtends().contains(".")) {
+						//whole thing is there already!
+						parent = getClass(classes, decl.getExtends());
+						
+						//if parent is null, create ghost class
+						//extends org.smanzana.imanorg.BestClass
+						if (parent == null) {
+							String pack, parName;
+							pack = decl.getExtends().substring(0, decl.getExtends().lastIndexOf("."));
+							parName = decl.getExtends().substring(decl.getExtends().lastIndexOf(".") + 1);
+							parent = new Cclass(parName, pack);
+						}
+					} else {
+						//assume it's the same package as this class
+						parent = getClass(classes, c.getPackageName() + "." + decl.getExtends());
+						
+						if (parent == null) {
+							parent = new Cclass(decl.getExtends(), c.getPackageName());
+						}
+					}
+					
+				}
+				
+				//finally got a parent. It's either a ghost or a flesh class hehe
+				
+				//check to see if it's in our map. If not it's a ghost and needs a tree created for it
+				if (!treeMap.containsKey(parent)) {
+					treeMap.put(parent, new Tree(c.toString()));
+				}
+				
+				treeMap.get(c).setParent(treeMap.get(parent));
+			}
+			
+			
+		}
+		
+		//add a ghost class for the Object class
+		Cclass ob = new Cclass("Object", "java.lang");
+		Tree obTree = new Tree(ob.toString());
+		
+		//finally go and link all classes that don't have a parent to OBJECT, our root
+		for (Tree tree : treeMap.values()) {
+			if (tree.getParent() == null) {
+				tree.setParent(obTree);
+			}
 		}
 		
 		
-		
-		
-		return null;
+		return obTree;
 	}
 	
 	/**
