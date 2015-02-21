@@ -14,19 +14,20 @@ import com.smanzana.Exploratory2.Representations.Method;
 /**
  * Wraps around a file and grabs key lines for analysis
  * @author Skyler
- *
+ * @bugs TODO Ignores completely any method following a class field declaration!!!!!!!!!!
  */
 public class FileParser {
 
-	/**
-	 * private reference to the file to parse
-	 */
-	private File file;
 	
 	/**
 	 * Scanner object used for parsing
 	 */
 	private Scanner input;
+
+	/**
+	 * private reference to the file to parse
+	 */
+	private File file;
 	
 	public FileParser() {
 		this.input = null;
@@ -53,6 +54,7 @@ public class FileParser {
 		}
 		input = new Scanner(file);
 	}
+	
 	
 	/**
 	 * Updates the parser to point at the new file.
@@ -222,7 +224,6 @@ public class FileParser {
 				
 				if (methName.contains(" "))
 				if (methName.substring(0, methName.indexOf(" ")).contains(">") && !methName.substring(0, methName.indexOf(" ")).contains("<")) {
-					System.out.println("Trimming [" + methName + "]");
 					methName = methName.substring(methName.indexOf(">") + 1).trim();
 				}
 				
