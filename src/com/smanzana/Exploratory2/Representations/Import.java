@@ -22,6 +22,11 @@ public class Import {
 		importSpec = importLine.substring(finalIndex + 1);
 	}
 	
+	@Override
+	public String toString() {
+		return "[Package Name: " + this.packageName + "] [spec: " + this.importSpec + "]";
+	}
+	
 	
 	/**
 	 * @return the importSpec
