@@ -1,9 +1,9 @@
-package com.smanzana.Exploratory2;
+package com.smanzana.Exploratory2.Representations;
 
 import java.util.LinkedList;
 import java.util.List;
 
-import com.smanzana.Exploratory2.Parse.ClassDeclaration;
+import com.smanzana.Exploratory2.FileParsing.ClassDeclaration;
 
 /**
  * Represents a class lulz 

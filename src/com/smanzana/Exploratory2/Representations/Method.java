@@ -1,4 +1,4 @@
-package com.smanzana.Exploratory2;
+package com.smanzana.Exploratory2.Representations;
 
 public class Method {
 	

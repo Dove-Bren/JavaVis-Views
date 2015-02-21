@@ -1,8 +1,10 @@
-package com.smanzana.Exploratory2.Parse;
+package com.smanzana.Exploratory2.FileParsing;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+
+import com.smanzana.Exploratory2.Representations.Cclass;
 
 /**
  * Wraps around a file and grabs key lines for analysis
@@ -104,6 +106,18 @@ public class FileParser {
 			}
 		}
 		return null;
+	}
+	
+	public Cclass getcClass() {
+		if (input == null) {
+			return null;
+		}
+		
+		Cclass cl = null;
+		
+		
+		
+		return cl;
 	}
 	
 }

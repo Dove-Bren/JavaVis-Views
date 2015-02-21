@@ -1,4 +1,4 @@
-package com.smanzana.Exploratory2.Parse;
+package com.smanzana.Exploratory2.FileParsing;
 
 import java.util.HashSet;
 import java.util.Set;

@@ -16,8 +16,9 @@ import org.jgraph.graph.GraphConstants;
 import org.jgrapht.ext.JGraphModelAdapter;
 import org.jgrapht.graph.DefaultEdge;
 
-import com.smanzana.Exploratory2.Parse.ClassDeclaration;
-import com.smanzana.Exploratory2.Parse.FileParser;
+import com.smanzana.Exploratory2.FileParsing.ClassDeclaration;
+import com.smanzana.Exploratory2.FileParsing.FileParser;
+import com.smanzana.Exploratory2.Representations.Cclass;
 import com.smanzana.Exploratory2.Visual.ClassVertex;
 import com.smanzana.Exploratory2.Visual.Graph;
 import com.smanzana.Exploratory2.Visual.ParentGraph;

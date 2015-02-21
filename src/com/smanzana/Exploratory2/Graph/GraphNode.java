@@ -1,6 +1,6 @@
 package com.smanzana.Exploratory2.Graph;
 
-import com.smanzana.Exploratory2.Cclass;
+import com.smanzana.Exploratory2.Representations.Cclass;
 
 public class GraphNode {
 	
