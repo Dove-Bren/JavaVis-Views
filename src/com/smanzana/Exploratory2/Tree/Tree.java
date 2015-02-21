@@ -45,6 +45,7 @@ public class Tree {
 	 */
 	public void setParent(Tree parent) {
 		this.parent = parent;
+		parent.addChild(this);
 	}
 
 
