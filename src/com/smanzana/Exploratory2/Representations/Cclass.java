@@ -104,7 +104,16 @@ public class Cclass {
 	 * @return
 	 */
 	public Import getImport(String localName) {
-		return null; //TODO
+		for (Import im : imports) {
+			//look at import statements for the passed spec.
+			if (im.getImportSpec().equals(localName)) {
+				return im;
+			}
+			//we also need to be wary of import java.util.*'s
+			//TODO figure out if there's any way to do this... darn it!
+			
+		}
+		return null;
 	}
 	
 	
