@@ -49,8 +49,8 @@ public final class JSON {
 		}
 		writer.print("{ ");
 		writer.print("\"id\": \"" + tree.getName() + "\", ");
-		writer.print("\"name\": \"" + tree.getName() + "\", ");
-		writer.print("\"data\": {}, ");
+		writer.print("\"name\": \"" + tree.getName().substring(tree.getName().lastIndexOf(".") + 1) + "\", ");
+		writer.print("\"data\": {\"package\": \"" + tree.getName().substring(0, tree.getName().lastIndexOf("."))     + "\"}, ");
 		writer.print("\"children\": [");
 //		
 //		//go through all children and print them too
