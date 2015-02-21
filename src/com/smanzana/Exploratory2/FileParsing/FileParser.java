@@ -188,17 +188,20 @@ public class FileParser {
 				//super important: is this a field or a method?
 								
 				int braceCount = 0;
-				
-				while (ClassDeclaration.isModifier(input.next())) {
-					;
-					;
-					;
+				line = input.next();
+				while (ClassDeclaration.isModifier(line)) {
+					
+					line = input.next();
 				}
-				//skip the return type
+				//after the loop, if the last line has a (, we're dealing with a constructor
+				//magic, I know!
+				if (line.contains("(")) {
+					continue;
+				}
 				
 				input.useDelimiter("\\)");
 				String methName = input.next().trim() + ")";
-				if (methName.contains(";")) {
+				if (methName.contains(";") || methName.startsWith("(")) {
 					continue;
 				}
 				
