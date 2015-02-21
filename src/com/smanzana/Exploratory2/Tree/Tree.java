@@ -23,12 +23,15 @@ public class Tree {
 	 */
 	private int hDepth;
 	
+	private String name;
 	
-	public Tree() {
+	
+	public Tree(String name) {
 		this.parent = null;
 		this.children = new HashSet<Tree>();
 		this.depth = 0;
 		this.hDepth = 0;
+		this.name = name;
 	}
 
 
@@ -78,6 +81,14 @@ public class Tree {
 	 */
 	public int gethDepth() {
 		return hDepth;
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public void setName(String name) {
+		this.name = name;
 	}
 		
 	
