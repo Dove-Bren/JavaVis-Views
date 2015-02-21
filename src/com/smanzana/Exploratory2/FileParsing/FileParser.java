@@ -176,6 +176,20 @@ public class FileParser {
 			input.useDelimiter(Pattern.compile("[ \\t\\r]"));
 			line = input.next().trim();
 			
+			//skip over comments
+			if (line.startsWith("//")) {
+				//skip line
+				input.nextLine();
+				continue;
+			}
+			if (line.startsWith("/*")) {
+				while (input.hasNext() && !input.next().contains("*/")) {
+					;
+				}
+				continue;
+			}
+			
+			
 			//if (line.isEmpty() || line.startsWith("/") || line.startsWith("*") || line.startsWith("{"))
 			//we ONLY care about method declarations
 			if (line.startsWith("public") || line.startsWith("private") || line.startsWith("protected")) {
@@ -204,6 +218,10 @@ public class FileParser {
 				String methName = input.next().trim() + ")";
 				if (methName.contains(";") || methName.startsWith("(")) {
 					continue;
+				}
+				
+				if (methName.contains(">") && !methName.contains("<")) {
+					methName = methName.substring(methName.indexOf(">") + 1).trim();
 				}
 				
 				String buildString = "";
