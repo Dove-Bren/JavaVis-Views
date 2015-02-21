@@ -34,6 +34,8 @@ public class Cclass {
 		if (methods == null) {
 			methods = new LinkedList<Method>();
 		}
+		
+		imports = new LinkedList<Import>();
 				
 	}
 	
@@ -102,7 +104,7 @@ public class Cclass {
 	 * @return
 	 */
 	public Import getImport(String localName) {
-		
+		return null; //TODO
 	}
 	
 	
@@ -115,6 +117,12 @@ public class Cclass {
 	public String info() {
 
 		String out =  "[" + this.packageName + "." + this.name +"]:\n";
+		if (!imports.isEmpty()) {
+			out += "Import statements: \n";
+			for (Import im : imports) {
+				out += " -" + im + "\n";
+			}
+		}
 		if (declaration != null && declaration.getExtends() != null) {
 			out += "Extends: " + declaration.getExtends() + "\n";
 		}
