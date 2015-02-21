@@ -1,29 +1,13 @@
 package com.smanzana.Exploratory2;
 
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.awt.geom.Rectangle2D;
+
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
-import java.util.Scanner;
 import java.util.Set;
-import java.util.regex.Pattern;
 
-import javax.swing.JFrame;
-
-import org.jgraph.JGraph;
-import org.jgraph.graph.DefaultGraphCell;
-import org.jgraph.graph.GraphConstants;
-import org.jgrapht.ext.JGraphModelAdapter;
-import org.jgrapht.graph.DefaultEdge;
-
-import com.smanzana.Exploratory2.FileParsing.ClassDeclaration;
 import com.smanzana.Exploratory2.FileParsing.FileParser;
 import com.smanzana.Exploratory2.Representations.Cclass;
-import com.smanzana.Exploratory2.Representations.Method;
 
 /**
  * This class is the driver for the visualization. 
@@ -36,29 +20,9 @@ public final class Driver {
 	
 	public static Set<Cclass> classes;
 	
-	//public static Graph eGraph, iGraph;
 	
-	//public static JGraphModelAdapter<String, DefaultEdge> eAdapter, iAdapter;
-	
-	//public static JFrame eFrame, iFrame;
-
-	
-//	@Override
-//	public void init() {
-//		String[] s = new String[1];
-//		s[0] = "src";
-//		
-//		fileP = new FileParser();
-//		graph = new ParentGraph();
-//        
-//        resize(640, 480);
-        
-//		Driver.main(s);
-//	}
-//	
 	public static void main(String[] args) {
 				
-		
 		
 		if (args.length == 0) {
 			printUsage();
@@ -71,22 +35,9 @@ public final class Driver {
 			System.out.println("Unable to find the passed file: " + file.getAbsolutePath());
 			return;
 		}
-		
-//		Scanner input = null;
-//		try {
-//			input = new Scanner(file);
-//		} catch (FileNotFoundException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-		
-
 		fileP = new FileParser();
 		classes = new HashSet<Cclass>();
-
-// 		eGraph = new ParentGraph();
-// 		iGraph = new ParentGraph();
-		
+	
 		processFile(file);
 		
 		System.out.println("Got a total of: " + classes.size() + " classes!");
@@ -95,47 +46,6 @@ public final class Driver {
 			System.out.println(c);
 		}
 		
-//		eFrame = new JFrame("Extend Graph");
-//        eFrame.setSize(640, 480);
-//        eFrame.addWindowListener(new WindowAdapter() {
-//
-//			public void windowClosing(WindowEvent e) {
-//				System.exit(0);
-//			}
-//		});
-//
-//		iFrame = new JFrame("Implement Graph");
-//        iFrame.setSize(640, 480);
-//        iFrame.addWindowListener(new WindowAdapter() {
-//
-//			public void windowClosing(WindowEvent e) {
-//				System.exit(0);
-//			}
-//		});
-//        
-//
-//    	
-//    	JGraph jgraphi, jgraphe;
-//
-//		eAdapter = new JGraphModelAdapter<String, DefaultEdge>(eGraph.getGraph());
-//        jgraphe = new JGraph( eAdapter );
-//        eFrame.getContentPane().add( jgraphe );
-//        
-//        iAdapter = new JGraphModelAdapter<String, DefaultEdge>(iGraph.getGraph());
-//        jgraphi = new JGraph( iAdapter );
-//        iFrame.getContentPane().add( jgraphi );
-//        
-//        
-//        for (ClassVertex vertex : eGraph.vertexSet()) {
-//        	setVertexPosition(eAdapter, vertex);
-//		}
-//        
-//        for (ClassVertex vertex : iGraph.vertexSet()) {
-//        	setVertexPosition(iAdapter, vertex);
-//        }
-//
-//        eFrame.setVisible(true);
-//        iFrame.setVisible(true);
 	}
 	
 	
@@ -163,65 +73,13 @@ public final class Driver {
 				e.printStackTrace();
 				return;
 			}
-
-//			
+	
 			Cclass cl = fileP.getcClass();
 			classes.add(cl);
-//			
-//			for (Method m : cl.getMethods()) {
-//				System.out.println("" + m.getName() + " :");
-//				for (String s : m.getCodeLines()) {
-//					System.out.print(s);
-//				}
-//				System.out.println("");
-//			}
-			
-			
-			
-			
-			
-			
-//			System.out.println("Class found: " + decl.getClassName());
-//			if (decl.getExtends() != null)
-//			System.out.println("  Class extends: " + decl.getExtends());
-//			if (!decl.getImpements().isEmpty()) {
-//				System.out.println("  Class implements: " + decl.getImpements());
-//			}
-//			ClassVertex eVertex =  new ClassVertex(decl.getClassName());
-//			ClassVertex iVertex =  new ClassVertex(decl.getClassName());
-//			//us.setX(graph.getNodeCount() * 100 + 20);
-//			//us.setY(50);
-//			//, us.getX(), 50
-//			
-//			if (decl.getExtends() != null) {
-//				eGraph.addRelationship(new ClassVertex(decl.getExtends()), eVertex);
-//				//us.setY(us.getY() + 50);
-//			} else {
-//				eGraph.addClass(eVertex);
-//			}
-//			
-//			if (!decl.getImpements().isEmpty()) {
-//				for (String inter : decl.getImpements()) {
-//					iGraph.addRelationship(new ClassVertex(inter), iVertex);
-//				}
-//			} else {
-//				iGraph.addClass(iVertex);
-//			}
+
 			
 		}
 	}
 
-		
-		
-//
-//	    GraphLayoutCache cache = jgraph.getGraphLayoutCache();
-//		for (Object item : jgraph.getRoots()) {
-//		    GraphCell cell = (GraphCell) item;
-//		    CellView view = cache.getMapping(cell, true);
-//		    Rectangle2D bounds = view.getBounds();
-//		    bounds.setRect(x, y, bounds.getWidth(), bounds.getHeight());
-//		    
-//		    }
-//		
 
 }
