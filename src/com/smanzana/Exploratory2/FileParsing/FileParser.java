@@ -220,7 +220,9 @@ public class FileParser {
 					continue;
 				}
 				
-				if (methName.contains(">") && !methName.contains("<")) {
+				if (methName.contains(" "))
+				if (methName.substring(0, methName.indexOf(" ")).contains(">") && !methName.substring(0, methName.indexOf(" ")).contains("<")) {
+					System.out.println("Trimming [" + methName + "]");
 					methName = methName.substring(methName.indexOf(">") + 1).trim();
 				}
 				
