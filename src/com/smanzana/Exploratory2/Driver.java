@@ -48,9 +48,13 @@ public final class Driver {
 		
 		System.out.println("Got a total of: " + classes.size() + " classes!");
 		
-		for (Cclass c : classes) {
-			System.out.println(c.info());
-		}
+//		for (Cclass c : classes) {
+//			System.out.println(c.info());
+//		}
+		
+		Tree extendTree = classesAsExtendsTree(classes);
+		
+		System.out.println(extendTree);
 		
 		
 		

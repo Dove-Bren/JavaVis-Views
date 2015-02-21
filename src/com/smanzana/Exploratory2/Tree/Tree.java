@@ -107,7 +107,7 @@ public class Tree {
 			
 			//update hDepth
 			//just tack on the new hDepth to current, as we'll have one class per vert. line
-			hDepth = hDepth + child.gethDepth();
+			hDepth = hDepth + Math.max(child.gethDepth(), 1);
 			
 			child.setParent(this);
 		}
@@ -156,7 +156,7 @@ public class Tree {
 		if (!children.isEmpty()) {
 			out += "Children:\n";
 			for (Tree t : children) {
-				out += "  " + t.getName() + "\n";
+				out += "  " + t.getName() + " hDepth: " + t.gethDepth() + "|" + t.getChildren().size() + "\n";
 			}
 		}
 		
