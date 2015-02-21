@@ -64,54 +64,54 @@ public final class Driver {
 			System.out.println("Unable to find the passed file: " + file.getAbsolutePath());
 			return;
 		}
-		
-		fileP = new FileParser();
- 		eGraph = new ParentGraph();
- 		iGraph = new ParentGraph();
+//		
+//		fileP = new FileParser();
+// 		eGraph = new ParentGraph();
+// 		iGraph = new ParentGraph();
 		
 		processFile(file);
 		
-		eFrame = new JFrame("Extend Graph");
-        eFrame.setSize(640, 480);
-        eFrame.addWindowListener(new WindowAdapter() {
-
-			public void windowClosing(WindowEvent e) {
-				System.exit(0);
-			}
-		});
-
-		iFrame = new JFrame("Implement Graph");
-        iFrame.setSize(640, 480);
-        iFrame.addWindowListener(new WindowAdapter() {
-
-			public void windowClosing(WindowEvent e) {
-				System.exit(0);
-			}
-		});
-        
-
-    	
-    	JGraph jgraphi, jgraphe;
-
-		eAdapter = new JGraphModelAdapter<String, DefaultEdge>(eGraph.getGraph());
-        jgraphe = new JGraph( eAdapter );
-        eFrame.getContentPane().add( jgraphe );
-        
-        iAdapter = new JGraphModelAdapter<String, DefaultEdge>(iGraph.getGraph());
-        jgraphi = new JGraph( iAdapter );
-        iFrame.getContentPane().add( jgraphi );
-        
-        
-        for (ClassVertex vertex : eGraph.vertexSet()) {
-        	setVertexPosition(eAdapter, vertex);
-		}
-        
-        for (ClassVertex vertex : iGraph.vertexSet()) {
-        	setVertexPosition(iAdapter, vertex);
-        }
-
-        eFrame.setVisible(true);
-        iFrame.setVisible(true);
+//		eFrame = new JFrame("Extend Graph");
+//        eFrame.setSize(640, 480);
+//        eFrame.addWindowListener(new WindowAdapter() {
+//
+//			public void windowClosing(WindowEvent e) {
+//				System.exit(0);
+//			}
+//		});
+//
+//		iFrame = new JFrame("Implement Graph");
+//        iFrame.setSize(640, 480);
+//        iFrame.addWindowListener(new WindowAdapter() {
+//
+//			public void windowClosing(WindowEvent e) {
+//				System.exit(0);
+//			}
+//		});
+//        
+//
+//    	
+//    	JGraph jgraphi, jgraphe;
+//
+//		eAdapter = new JGraphModelAdapter<String, DefaultEdge>(eGraph.getGraph());
+//        jgraphe = new JGraph( eAdapter );
+//        eFrame.getContentPane().add( jgraphe );
+//        
+//        iAdapter = new JGraphModelAdapter<String, DefaultEdge>(iGraph.getGraph());
+//        jgraphi = new JGraph( iAdapter );
+//        iFrame.getContentPane().add( jgraphi );
+//        
+//        
+//        for (ClassVertex vertex : eGraph.vertexSet()) {
+//        	setVertexPosition(eAdapter, vertex);
+//		}
+//        
+//        for (ClassVertex vertex : iGraph.vertexSet()) {
+//        	setVertexPosition(iAdapter, vertex);
+//        }
+//
+//        eFrame.setVisible(true);
+//        iFrame.setVisible(true);
 	}
 	
 	
@@ -141,7 +141,7 @@ public final class Driver {
 			}
 
 			
-			ClassDeclaration decl = fileP.getDeclaration();
+			Cclass cl = fileP.getDeclaration();
 			System.out.println("Class found: " + decl.getClassName());
 			if (decl.getExtends() != null)
 			System.out.println("  Class extends: " + decl.getExtends());

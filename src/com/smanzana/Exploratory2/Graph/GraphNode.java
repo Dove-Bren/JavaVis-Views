@@ -1,6 +1,6 @@
 package com.smanzana.Exploratory2.Graph;
 
-import com.smanzana.Exploratory2.Driver;
+import com.smanzana.Exploratory2.Cclass;
 
 public class GraphNode {
 	
@@ -14,10 +14,10 @@ public class GraphNode {
 	private String uniqueKey; 
 	
 	
-	public GraphNode(String name) {
-		this.name = name;
+	public GraphNode(Cclass cl) {
+		this.name = cl.getName();
 		
-		this.uniqueKey = (Driver.class.getPackage().getName().substring(Driver.class.getPackage().getName().lastIndexOf(".") + 1)) + "." + this.name;
+		this.uniqueKey = (cl.getPackageName().substring(cl.getPackageName().lastIndexOf(".") + 1)) + "." + this.name;
 	}
 
 
