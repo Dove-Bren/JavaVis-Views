@@ -20,6 +20,7 @@ public class Import {
 		
 		packageName = importLine.substring(0, finalIndex);
 		importSpec = importLine.substring(finalIndex + 1);
+		importSpec = importSpec.substring(0, importSpec.length() -1);
 	}
 	
 	@Override
