@@ -18,7 +18,7 @@ public class Import {
 		//#import org.blah.bluh.*; or org.blah.bluh.class
 		int finalIndex = importLine.lastIndexOf(".");
 		
-		packageName = importLine.substring(0, finalIndex - 1);
+		packageName = importLine.substring(0, finalIndex);
 		importSpec = importLine.substring(finalIndex + 1);
 	}
 	
