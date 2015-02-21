@@ -24,9 +24,6 @@ import com.smanzana.Exploratory2.FileParsing.ClassDeclaration;
 import com.smanzana.Exploratory2.FileParsing.FileParser;
 import com.smanzana.Exploratory2.Representations.Cclass;
 import com.smanzana.Exploratory2.Representations.Method;
-import com.smanzana.Exploratory2.Visual.ClassVertex;
-import com.smanzana.Exploratory2.Visual.Graph;
-import com.smanzana.Exploratory2.Visual.ParentGraph;
 
 /**
  * This class is the driver for the visualization. 
@@ -213,18 +210,7 @@ public final class Driver {
 			
 		}
 	}
-	
-	private static void setVertexPosition(JGraphModelAdapter<String, DefaultEdge> adapter, ClassVertex vertex) {
-        DefaultGraphCell cell = adapter.getVertexCell( vertex.getName() );
-        Map attr = cell.getAttributes(  );
-        Rectangle2D b    = GraphConstants.getBounds(attr);
-        b.setRect(vertex.getX(), vertex.getY(), b.getWidth(), b.getHeight());
-        GraphConstants.setBounds( attr, b);
 
-        Map cellAttr = new HashMap(  );
-        cellAttr.put( cell, attr );
-        adapter.edit( cellAttr, null, null, null);
-	}
 		
 		
 //
