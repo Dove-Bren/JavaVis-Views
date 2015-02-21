@@ -10,7 +10,7 @@ public class Import {
 	public Import(String importLine) {
 		
 		importLine = importLine.trim();
-		importLine = importLine.substring(8); //'#import ' is 8 chars
+		importLine = importLine.substring(7); //'import ' is 7 chars
 		if (importLine.isEmpty()) {
 			importSpec = null;
 			packageName = null;
