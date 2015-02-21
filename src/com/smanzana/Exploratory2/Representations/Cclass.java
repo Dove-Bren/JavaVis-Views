@@ -47,6 +47,10 @@ public class Cclass {
 		this(name, null, packageName, methods);
 	}
 	
+	public Cclass(String name, String packageName) {
+		this(name, null, packageName, null);
+	}
+	
 	public Cclass(String name) {
 		this(name, null, null, null);
 	}
