@@ -110,7 +110,7 @@ public class ClassDeclaration {
 		return extendString;
 	}
 	
-	public Set<String> getImpements() {
+	public Set<String> getImplements() {
 		return implementStrings;
 	}
 }
