@@ -84,7 +84,7 @@ public class ClassDeclaration {
 		
 	}
 	
-	private boolean isModifier(String str) {
+	public static boolean isModifier(String str) {
 		switch (str) {
 		case "public":
 		case "private":

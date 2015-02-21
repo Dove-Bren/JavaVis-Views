@@ -7,6 +7,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
+import java.util.regex.Pattern;
 
 import javax.swing.JFrame;
 
@@ -19,6 +21,7 @@ import org.jgrapht.graph.DefaultEdge;
 import com.smanzana.Exploratory2.FileParsing.ClassDeclaration;
 import com.smanzana.Exploratory2.FileParsing.FileParser;
 import com.smanzana.Exploratory2.Representations.Cclass;
+import com.smanzana.Exploratory2.Representations.Method;
 import com.smanzana.Exploratory2.Visual.ClassVertex;
 import com.smanzana.Exploratory2.Visual.Graph;
 import com.smanzana.Exploratory2.Visual.ParentGraph;
@@ -54,6 +57,8 @@ public final class Driver {
 //	
 	public static void main(String[] args) {
 				
+		
+		
 		if (args.length == 0) {
 			printUsage();
 			return;
@@ -65,8 +70,18 @@ public final class Driver {
 			System.out.println("Unable to find the passed file: " + file.getAbsolutePath());
 			return;
 		}
-//		
-//		fileP = new FileParser();
+		
+		Scanner input = null;
+		try {
+			input = new Scanner(file);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+
+		fileP = new FileParser();
+
 // 		eGraph = new ParentGraph();
 // 		iGraph = new ParentGraph();
 		
@@ -141,34 +156,42 @@ public final class Driver {
 				return;
 			}
 
+//			
+			Cclass cl = fileP.getcClass();
 			
-			Cclass cl = fileP.getDeclaration();
-			System.out.println("Class found: " + decl.getClassName());
-			if (decl.getExtends() != null)
-			System.out.println("  Class extends: " + decl.getExtends());
-			if (!decl.getImpements().isEmpty()) {
-				System.out.println("  Class implements: " + decl.getImpements());
-			}
-			ClassVertex eVertex =  new ClassVertex(decl.getClassName());
-			ClassVertex iVertex =  new ClassVertex(decl.getClassName());
-			//us.setX(graph.getNodeCount() * 100 + 20);
-			//us.setY(50);
-			//, us.getX(), 50
-			
-			if (decl.getExtends() != null) {
-				eGraph.addRelationship(new ClassVertex(decl.getExtends()), eVertex);
-				//us.setY(us.getY() + 50);
-			} else {
-				eGraph.addClass(eVertex);
-			}
-			
-			if (!decl.getImpements().isEmpty()) {
-				for (String inter : decl.getImpements()) {
-					iGraph.addRelationship(new ClassVertex(inter), iVertex);
+			for (Method m : cl.getMethods()) {
+				System.out.println("" + m.getName() + " :");
+				for (String s : m.getCodeLines()) {
+					System.out.print(s);
 				}
-			} else {
-				iGraph.addClass(iVertex);
+				System.out.println("");
 			}
+//			System.out.println("Class found: " + decl.getClassName());
+//			if (decl.getExtends() != null)
+//			System.out.println("  Class extends: " + decl.getExtends());
+//			if (!decl.getImpements().isEmpty()) {
+//				System.out.println("  Class implements: " + decl.getImpements());
+//			}
+//			ClassVertex eVertex =  new ClassVertex(decl.getClassName());
+//			ClassVertex iVertex =  new ClassVertex(decl.getClassName());
+//			//us.setX(graph.getNodeCount() * 100 + 20);
+//			//us.setY(50);
+//			//, us.getX(), 50
+//			
+//			if (decl.getExtends() != null) {
+//				eGraph.addRelationship(new ClassVertex(decl.getExtends()), eVertex);
+//				//us.setY(us.getY() + 50);
+//			} else {
+//				eGraph.addClass(eVertex);
+//			}
+//			
+//			if (!decl.getImpements().isEmpty()) {
+//				for (String inter : decl.getImpements()) {
+//					iGraph.addRelationship(new ClassVertex(inter), iVertex);
+//				}
+//			} else {
+//				iGraph.addClass(iVertex);
+//			}
 			
 		}
 	}
