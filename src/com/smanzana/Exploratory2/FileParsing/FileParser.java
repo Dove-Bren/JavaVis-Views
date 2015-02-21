@@ -313,6 +313,7 @@ public class FileParser {
 		input.useDelimiter(delim);
 
 		cl = new Cclass(decl, packageName, methods);
+		cl.setImports(imports);
 		return cl;
 	}
 	

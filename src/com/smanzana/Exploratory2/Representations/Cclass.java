@@ -19,6 +19,8 @@ public class Cclass {
 	
 	private List<Method> methods;
 	
+	private List<Import> imports;
+	
 	private ClassDeclaration declaration;
 	
 	public Cclass(String name, ClassDeclaration decl, String packageName, List<Method> methods) {
@@ -76,6 +78,34 @@ public class Cclass {
 		//not even once, kids
 		methods.add(meth);
 	}
+	
+	
+	
+	/**
+	 * @return the imports
+	 */
+	public List<Import> getImports() {
+		return imports;
+	}
+
+	/**
+	 * @param imports the imports to set
+	 */
+	public void setImports(List<Import> imports) {
+		this.imports = imports;
+	}
+
+	/**
+	 * Uses the passed class name (one that is not prefixed by the package) to return the
+	 * import statement used to import the class's reference
+	 * @param localName
+	 * @return
+	 */
+	public Import getImport(String localName) {
+		
+	}
+	
+	
 	
 	/**
 	 * Prints out detailed information about the class.<br />
