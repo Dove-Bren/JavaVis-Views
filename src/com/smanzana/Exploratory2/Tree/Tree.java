@@ -156,7 +156,7 @@ public class Tree {
 		if (!children.isEmpty()) {
 			out += "Children:\n";
 			for (Tree t : children) {
-				out += "  " + t.getName() + " hDepth: " + t.gethDepth() + "|" + t.getChildren().size() + "\n";
+				out += "  " + t.getName() + "\n";
 			}
 		}
 		
