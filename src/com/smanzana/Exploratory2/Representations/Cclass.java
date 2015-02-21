@@ -77,8 +77,13 @@ public class Cclass {
 		methods.add(meth);
 	}
 	
-	@Override
-	public String toString() {
+	/**
+	 * Prints out detailed information about the class.<br />
+	 * In many ways, this is toString++
+	 * @return
+	 */
+	public String info() {
+
 		String out =  "[" + this.packageName + "." + this.name +"]:\n";
 		if (declaration != null && declaration.getExtends() != null) {
 			out += "Extends: " + declaration.getExtends() + "\n";
@@ -92,7 +97,16 @@ public class Cclass {
 		
 		
 		return out;
-				
+	}
+	
+	@Override
+	public String toString() {
+		return this.packageName + "." + this.name;
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		return toString().equals(o.toString());
 	}
 	
 }
