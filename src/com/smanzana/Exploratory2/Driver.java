@@ -63,9 +63,9 @@ public final class Driver {
 		
 		System.out.println(implementGraph);
 		
-		File outputJson = new File("JSONOut.json");
+		File outputJson = new File("ImplementGraph.json");
 		
-		JSON.toJSON(outputJson, extendTree);
+		JSON.toJSON(outputJson, implementGraph);
 		
 		
 	}
