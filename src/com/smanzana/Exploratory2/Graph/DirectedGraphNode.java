@@ -5,7 +5,7 @@ import java.util.Set;
 
 import com.smanzana.Exploratory2.Representations.Cclass;
 
-public class DirectedGraphNode {
+public class DirectedGraphNode extends GraphNode{
 	
 	private String name;
 	
@@ -45,15 +45,24 @@ public class DirectedGraphNode {
 		return edges;
 	}
 	
+	public boolean addEdge(DirectedGraphNode to) {
+		DirectedWeightedEdge edge = new DirectedWeightedEdge(this, to);
+		
+		return edges.add(edge);
+		}
+	
+	
+	
 	@Override
 	public String toString() {
-		String out = uniqueKey + "\n";
+		String out = uniqueKey;
 		
 		if (edges != null && !edges.isEmpty()) {
-			out += "Edges: \n";
+			out += "\nEdges: \n[\n";
 			for (DirectedWeightedEdge edge : edges) {
 				out += "  " + edge + "\n";
 			}
+			out += "]";
 		}
 		
 		

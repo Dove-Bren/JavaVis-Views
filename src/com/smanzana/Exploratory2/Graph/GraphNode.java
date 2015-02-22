@@ -13,6 +13,11 @@ public class GraphNode {
 	 */
 	private String uniqueKey; 
 	
+	public GraphNode() {
+		this.name = "Invalid Node";
+		this.uniqueKey = "Invalid." + this.name;
+	}
+	
 	
 	public GraphNode(Cclass cl) {
 		this.name = cl.getName();

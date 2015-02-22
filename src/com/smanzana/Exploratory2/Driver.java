@@ -11,7 +11,10 @@ import java.util.Set;
 import com.smanzana.Exploratory2.FileParsing.ClassDeclaration;
 import com.smanzana.Exploratory2.FileParsing.FileParser;
 import com.smanzana.Exploratory2.FileParsing.JSON;
+import com.smanzana.Exploratory2.Graph.DirectedGraph;
+import com.smanzana.Exploratory2.Graph.DirectedGraphNode;
 import com.smanzana.Exploratory2.Graph.Graph;
+import com.smanzana.Exploratory2.Graph.GraphNode;
 import com.smanzana.Exploratory2.Representations.Cclass;
 import com.smanzana.Exploratory2.Representations.Import;
 import com.smanzana.Exploratory2.Tree.Tree;
@@ -57,6 +60,11 @@ public final class Driver {
 		
 		System.out.println(extendTree);
 		
+		DirectedGraph implementGraph = classesAsImplementsGraph(classes);
+		//TODO TEST
+		
+		System.out.println(implementGraph);
+		
 		File outputJson = new File("JSONOut.json");
 		
 		JSON.toJSON(outputJson, extendTree);
@@ -97,8 +105,99 @@ public final class Driver {
 		}
 	}
 	
-	private static Graph classesAsGraph(Set<Cclass> classes) {
-		return null;
+	private static DirectedGraph classesAsImplementsGraph(Set<Cclass> classes) {
+		
+		if (classes == null || classes.isEmpty()) {
+			return null;
+		}
+		
+		//also a naive approach, add all classes as nodes and then do edges
+		Map<Cclass, DirectedGraphNode> nodeMap = new HashMap<Cclass, DirectedGraphNode>();
+		DirectedGraph graph = new DirectedGraph();
+		
+		for (Cclass c : classes) {
+			//go through and create and add each class/vertex to the graph
+			DirectedGraphNode n = new DirectedGraphNode(c);
+			graph.addNode(n);
+			nodeMap.put(c, n);
+		}
+		
+		
+		
+		
+		//now, parse through and add edges. This is an implements graph, so add edge FROM the class
+		//that is implemented TO the current class
+		for (Cclass c : classes) {
+			//each class has an array of implementations 
+			if (c.getDeclaration() == null || c.getDeclaration().getImplements() == null || c.getDeclaration().getImplements().isEmpty()) {
+				continue;
+			}
+			
+			//convenience
+			Set<String> impleSet = c.getDeclaration().getImplements();
+			for (String impl : impleSet) {
+				//for each, add self as edge to
+				{
+					System.out.println("Searning for interface: " + impl);
+					//has a parent
+					Import im = c.getImport(impl);
+					Cclass parent;
+					if (im != null) {
+						//we found an import that matched! e.g. we have it's package name!
+						parent = getClass(nodeMap.keySet(), im.getPackageName() + "." + impl);
+						
+						//if parent == null for any of these, it means we haven't created a tree for the class
+						//yet. This probably means we don't have the source code for that class, and need
+						//to make up an imaginary class
+						if (parent == null) {
+							parent = new Cclass(impl, im.getPackageName());
+						}
+					} else {
+						//no matching import, meaning it has the same package
+						//OR it means there was a generic import: java.util.*
+						//which we can't recover from :(
+						
+						//our last shot is that the whole package was specific inline. We test for this
+						//by seeing if there exists a . in the extend line :(
+						if (impl.contains(".")) {
+							//whole thing is there already!
+							parent = getClass(nodeMap.keySet(), impl);
+							
+							//if parent is null, create ghost class
+							//extends org.smanzana.imanorg.BestClass
+							if (parent == null) {
+								String pack, parName;
+								pack = impl.substring(0, impl.lastIndexOf("."));
+								parName = impl.substring(impl.lastIndexOf(".") + 1);
+								parent = new Cclass(parName, pack);
+							}
+						} else {
+							//assume it's the same package as this class
+							parent = getClass(nodeMap.keySet(), c.getPackageName() + "." + impl);
+							
+							if (parent == null) {
+								parent = new Cclass(impl, c.getPackageName());
+							}
+						}
+						
+					}
+					
+					//finally got a parent. It's either a ghost or a flesh class hehe
+					
+					//check to see if it's in our map. If not it's a ghost and needs a tree created for it
+					if (!nodeMap.containsKey(parent)) {
+						nodeMap.put(parent, new DirectedGraphNode(parent));
+					}
+					
+					nodeMap.get(parent).addEdge(nodeMap.get(c));
+				}
+			}
+			
+			
+		}
+		
+		return graph;
+		
 	}
 	
 	private static Tree classesAsExtendsTree(Set<Cclass> classes) {
@@ -129,13 +228,14 @@ public final class Driver {
 				Cclass parent;
 				if (im != null) {
 					//we found an import that matched! e.g. we have it's package name!
-					parent = getClass(classes, im.getPackageName() + "." + decl.getExtends());
+					parent = getClass(treeMap.keySet(), im.getPackageName() + "." + decl.getExtends());
 					
 					//if parent == null for any of these, it means we haven't created a tree for the class
 					//yet. This probably means we don't have the source code for that class, and need
 					//to make up an imaginary class
 					if (parent == null) {
 						parent = new Cclass(decl.getExtends(), im.getPackageName());
+						System.out.println("DEBUG: new ghost class: " + parent.getName());
 					}
 				} else {
 					//no matching import, meaning it has the same package
@@ -146,7 +246,7 @@ public final class Driver {
 					//by seeing if there exists a . in the extend line :(
 					if (decl.getExtends().contains(".")) {
 						//whole thing is there already!
-						parent = getClass(classes, decl.getExtends());
+						parent = getClass(treeMap.keySet(), decl.getExtends());
 						
 						//if parent is null, create ghost class
 						//extends org.smanzana.imanorg.BestClass
@@ -158,7 +258,7 @@ public final class Driver {
 						}
 					} else {
 						//assume it's the same package as this class
-						parent = getClass(classes, c.getPackageName() + "." + decl.getExtends());
+						parent = getClass(treeMap.keySet(), c.getPackageName() + "." + decl.getExtends());
 						
 						if (parent == null) {
 							parent = new Cclass(decl.getExtends(), c.getPackageName());
@@ -171,7 +271,7 @@ public final class Driver {
 				
 				//check to see if it's in our map. If not it's a ghost and needs a tree created for it
 				if (!treeMap.containsKey(parent)) {
-					treeMap.put(parent, new Tree(c.toString()));
+					treeMap.put(parent, new Tree(parent.toString()));
 				}
 				
 				treeMap.get(c).setParent(treeMap.get(parent));

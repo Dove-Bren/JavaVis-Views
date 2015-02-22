@@ -27,4 +27,18 @@ public class DirectedGraph extends Graph {
 	
 	//TODO get remove stuffs
 	
+	@Override
+	public String toString() {
+		String out = "Directed Graph:\n";
+		if (nodes != null && !nodes.isEmpty()) {
+			out += "Nodes:\n";
+			for (DirectedGraphNode node : nodes) {
+				out += "  " + node.toString() + "\n";
+			}
+		}
+		
+		
+		return out;
+	}
+	
 }
