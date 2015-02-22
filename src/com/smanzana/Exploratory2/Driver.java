@@ -13,8 +13,6 @@ import com.smanzana.Exploratory2.FileParsing.FileParser;
 import com.smanzana.Exploratory2.FileParsing.JSON;
 import com.smanzana.Exploratory2.Graph.DirectedGraph;
 import com.smanzana.Exploratory2.Graph.DirectedGraphNode;
-import com.smanzana.Exploratory2.Graph.Graph;
-import com.smanzana.Exploratory2.Graph.GraphNode;
 import com.smanzana.Exploratory2.Representations.Cclass;
 import com.smanzana.Exploratory2.Representations.Import;
 import com.smanzana.Exploratory2.Tree.Tree;
@@ -138,7 +136,6 @@ public final class Driver {
 			for (String impl : impleSet) {
 				//for each, add self as edge to
 				{
-					System.out.println("Searning for interface: " + impl);
 					//has a parent
 					Import im = c.getImport(impl);
 					Cclass parent;
